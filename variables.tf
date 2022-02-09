@@ -46,7 +46,7 @@ variable "cw_cron_expression" {
 
 variable "kms_key_alias" {
   type        = string
-  description = "KMS key alias (e.g. alias/mykms) for SNS encryption at rest. Permissions for cloudwatch must be added to this as well https://aws.amazon.com/de/premiumsupport/knowledge-center/cloudwatch-receive-sns-for-alarm-trigger/"
+  description = "KMS key alias (e.g. alias/mykms) for SNS encryption at rest. Permissions for cloudwatch must be added to this as well https://aws.amazon.com/de/premiumsupport/knowledge-center/cloudwatch-receive-sns-for-alarm-trigger/."
   default     = ""
 }
 
@@ -57,6 +57,7 @@ variable "sns_email_addresses" {
 }
 
 # Lambda env variables
+# ------------------------------------------------------------------------------------
 
 variable "verify_ssl" {
   type        = string
