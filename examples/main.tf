@@ -21,13 +21,12 @@ provider "aws" {
 
 module "create_domain_health_check" {
   source                   = "../"
-  health_check_domain_name = "users.tfe-nonprod.aws-cloud.axa-de.intraxa"
+  health_check_domain_name = "mydomain"
   health_check_path        = "_health_check"
   resource_prefix          = var.resource_prefix
-  subnet_ids               = ["subnet-092eafe62ad31610f"]
-  vpc_id                   = "vpc-0b15ec82229c433c0"
-  sns_email_addresses      = ["oliver.goetz@axa.com"]
-  verify_ssl               = "0"
+  subnet_ids               = ["subnet-12345"]
+  vpc_id                   = "vpc-12345"
+  sns_email_addresses      = ["my@mail.com"]
 }
 
 output "lambda_function_arn" {
