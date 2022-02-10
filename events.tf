@@ -6,7 +6,7 @@
 resource "aws_cloudwatch_event_rule" "health_check" {
   name                = "${local.name}CW-EventRule"
   description         = "Perform a health check on ${var.health_check_domain_name}."
-  schedule_expression = var.cw_cron_expression
+  schedule_expression = "cron(1/${var.cw_cron_interval} * * * ? *)"
 }
 
 # Define the lambda function as target

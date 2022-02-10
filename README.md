@@ -44,6 +44,7 @@ No modules.
 | [aws_cloudwatch_metric_alarm.domain_check](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm) | resource |
 | [aws_iam_role.role_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy.policy_role_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy_attachment.policy_attachment_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_lambda_function.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function) | resource |
 | [aws_lambda_permission.allow_cloudwatch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission) | resource |
 | [aws_security_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
@@ -60,7 +61,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Provisioning region | `string` | `"eu-central-1"` | no |
-| <a name="input_cw_cron_expression"></a> [cw\_cron\_expression](#input\_cw\_cron\_expression) | Cron job to schedule the health check | `string` | `"cron(1/5 * * * ? *)"` | no |
+| <a name="input_cw_cron_interval"></a> [cw\_cron\_interval](#input\_cw\_cron\_interval) | Cron interval in minutes to schedule the health check | `number` | `1` | no |
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | Tags to apply to all resources | `map(any)` | `{}` | no |
 | <a name="input_health_check_domain_name"></a> [health\_check\_domain\_name](#input\_health\_check\_domain\_name) | Domain name for the health check | `string` | n/a | yes |
 | <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | Health check path (without '/') | `string` | n/a | yes |

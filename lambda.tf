@@ -13,7 +13,7 @@ resource "aws_lambda_function" "this" {
   function_name    = "${local.name}Lambda"
   filename         = data.archive_file.this.output_path
   source_code_hash = data.archive_file.this.output_base64sha256
-  handler          = "lambda.handler"
+  handler          = "main.handler"
   role             = aws_iam_role.role_lambda.arn
   runtime          = "python3.9"
   timeout          = "120"
@@ -56,30 +56,14 @@ data "aws_iam_policy_document" "assume_role_lambda" {
 # Lambda role policy
 data "aws_iam_policy_document" "policy_role_lambda" {
   statement {
-    sid    = "1"
-    effect = "Allow"
-    actions = ["logs:PutLogEvents",
-      "logs:CreateLogStream",
-      "logs:CreateLogGroup",
-    "logs:DescribeLogStreams"]
-    resources = [aws_cloudwatch_log_group.this.arn]
-  }
-  statement {
-    sid       = 2
+    sid       = 1
     effect    = "Allow"
-    actions   = ["lambda:*"]
+    actions   = ["lambda:InvokeFunction"]
     resources = ["arn:aws:lambda:${var.aws_region}:${data.aws_caller_identity.this.account_id}:function:${local.name}Lambda"]
   }
+
   statement {
-    sid    = 3
-    effect = "Allow"
-    actions = ["ec2:CreateNetworkInterface",
-      "ec2:DescribeNetworkInterfaces",
-    "ec2:DeleteNetworkInterface"]
-    resources = ["*"]
-  }
-  statement {
-    sid       = 4
+    sid       = 2
     actions   = ["cloudwatch:PutMetricData"]
     resources = ["*"]
   }
@@ -90,6 +74,12 @@ resource "aws_iam_role_policy" "policy_role_lambda" {
   name_prefix = local.name
   policy      = data.aws_iam_policy_document.policy_role_lambda.json
   role        = aws_iam_role.role_lambda.id
+}
+
+# VPC basic execution role
+resource "aws_iam_role_policy_attachment" "policy_attachment_lambda" {
+  role       = aws_iam_role.role_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
 

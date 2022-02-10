@@ -34,10 +34,15 @@ variable "subnet_ids" {
 # Events
 # ------------------------------------------------------------------------------------
 
-variable "cw_cron_expression" {
-  type        = string
-  description = "Cron job to schedule the health check"
-  default     = "cron(1/5 * * * ? *)"
+variable "cw_cron_interval" {
+  type        = number
+  description = "Cron interval in minutes to schedule the health check"
+  default     = 1
+
+  validation {
+    condition     = contains([1, 5, 10, 20, 30, 40, 50], var.cw_cron_interval)
+    error_message = "ERROR: cw_cron_interval must be one [1,5,10,20,30,40,50]."
+  }
 }
 
 
