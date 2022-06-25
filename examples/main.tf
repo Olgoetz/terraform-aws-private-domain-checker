@@ -27,6 +27,9 @@ module "create_domain_health_check" {
   subnet_ids               = ["subnet-12345"]
   vpc_id                   = "vpc-12345"
   sns_email_addresses      = ["mymail@axa.com"]
+  listener_arn             = "myArn"
+  html_path_502            = "."
+  html_path_503            = "."
 
 }
 

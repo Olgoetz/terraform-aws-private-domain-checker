@@ -87,3 +87,18 @@ variable "health_check_domain_name" {
   description = "Domain name for the health check"
 
 }
+
+variable "listener_arn" {
+  type        = string
+  description = "ARN of the ALB listener"
+}
+
+variable "html_path_502" {
+  type        = string
+  description = "Path to a html file for a 502 fixed response"
+}
+
+variable "html_path_503" {
+  type        = string
+  description = "Path to a html file for a 503 fixed response"
+}

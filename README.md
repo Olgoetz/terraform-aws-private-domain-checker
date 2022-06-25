@@ -21,14 +21,14 @@ Look into `./examples`
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.4 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.74.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_archive"></a> [archive](#provider\_archive) | n/a |
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.74.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.1.0 |
 
 ## Modules
 
@@ -66,7 +66,10 @@ No modules.
 | <a name="input_health_check_domain_name"></a> [health\_check\_domain\_name](#input\_health\_check\_domain\_name) | Domain name for the health check | `string` | n/a | yes |
 | <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | Health check path (without '/') | `string` | n/a | yes |
 | <a name="input_health_check_port"></a> [health\_check\_port](#input\_health\_check\_port) | Health check port | `string` | `"443"` | no |
+| <a name="input_html_path_502"></a> [html\_path\_502](#input\_html\_path\_502) | Path to a html file for a 502 fixed response | `string` | n/a | yes |
+| <a name="input_html_path_503"></a> [html\_path\_503](#input\_html\_path\_503) | Path to a html file for a 503 fixed response | `string` | n/a | yes |
 | <a name="input_kms_key_alias"></a> [kms\_key\_alias](#input\_kms\_key\_alias) | KMS key alias (e.g. alias/mykms) for SNS encryption at rest. Permissions for cloudwatch must be added to this as well https://aws.amazon.com/de/premiumsupport/knowledge-center/cloudwatch-receive-sns-for-alarm-trigger/. | `string` | `""` | no |
+| <a name="input_listener_arn"></a> [listener\_arn](#input\_listener\_arn) | ARN of the ALB listener | `string` | n/a | yes |
 | <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | Prefix for all created resources (e.g. ApplicationX-) | `string` | n/a | yes |
 | <a name="input_sns_email_addresses"></a> [sns\_email\_addresses](#input\_sns\_email\_addresses) | List of email addresses to send reports to | `list(string)` | `[]` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | Subnet ids | `list(string)` | n/a | yes |

@@ -29,6 +29,9 @@ resource "aws_lambda_function" "this" {
       health_check_domain_name = var.health_check_domain_name
       health_check_path        = var.health_check_path
       port                     = var.health_check_port
+      listener_arn             = var.listener_arn
+      html_path_502            = var.html_path_502
+      html_path_503            = var.html_path_503
     }
   }
 }
@@ -63,7 +66,14 @@ data "aws_iam_policy_document" "policy_role_lambda" {
   }
 
   statement {
-    sid       = 2
+    sid = 2
+    actions = [
+      "elasticloadbalancing:CreateRule",
+    "elasticloadbalancing:DeleteRule"]
+    resources = [var.listener_arn]
+  }
+  statement {
+    sid       = 3
     actions   = ["cloudwatch:PutMetricData"]
     resources = ["*"]
   }
