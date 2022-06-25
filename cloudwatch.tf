@@ -4,7 +4,7 @@
 
 
 resource "aws_cloudwatch_metric_alarm" "domain_check" {
-  alarm_name          = trimsuffix(local.name, "-")
+  alarm_name          = "${local.name}${random_id.this.hex}"
   alarm_description   = "Alarm for ${var.health_check_domain_name} Health Check"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"

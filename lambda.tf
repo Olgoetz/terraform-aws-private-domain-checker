@@ -10,7 +10,7 @@ data "archive_file" "this" {
 
 # Function
 resource "aws_lambda_function" "this" {
-  function_name    = "${local.name}Lambda"
+  function_name    = "${local.name}Lambda-${random_id.this.hex}"
   filename         = data.archive_file.this.output_path
   source_code_hash = data.archive_file.this.output_base64sha256
   handler          = "main.handler"
@@ -40,7 +40,7 @@ resource "aws_lambda_function" "this" {
 # ------------------------------------------------------------------------------------
 resource "aws_iam_role" "role_lambda" {
   assume_role_policy = data.aws_iam_policy_document.assume_role_lambda.json
-  name               = "${local.name}Lambda-Role"
+  name               = "${local.name}LambdaRole-${random_id.this.hex}"
 }
 
 # Assume role policy
@@ -81,9 +81,9 @@ data "aws_iam_policy_document" "policy_role_lambda" {
 
 # Policy resource
 resource "aws_iam_role_policy" "policy_role_lambda" {
-  name_prefix = local.name
-  policy      = data.aws_iam_policy_document.policy_role_lambda.json
-  role        = aws_iam_role.role_lambda.id
+  name   = "${local.name}-LambdaPolicy-${random_id.this.hex}"
+  policy = data.aws_iam_policy_document.policy_role_lambda.json
+  role   = aws_iam_role.role_lambda.id
 }
 
 # VPC basic execution role
@@ -97,7 +97,7 @@ resource "aws_iam_role_policy_attachment" "policy_attachment_lambda" {
 # ------------------------------------------------------------------------------------
 
 resource "aws_cloudwatch_log_group" "this" {
-  name              = "/aws/lambda/${local.name}Lambda"
+  name              = "/aws/lambda/${local.name}Lambda-${random_id.this.hex}"
   retention_in_days = 3
 }
 
@@ -105,7 +105,7 @@ resource "aws_cloudwatch_log_group" "this" {
 # ------------------------------------------------------------------------------------
 # Security Group
 resource "aws_security_group" "this" {
-  name   = "${local.name}SG"
+  name   = "${local.name}SG-${random_id.this.hex}"
   vpc_id = var.vpc_id
 
   egress {
@@ -115,5 +115,5 @@ resource "aws_security_group" "this" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(tomap({ "Name" = "${local.name}SG" }), var.default_tags)
+  tags = merge(tomap({ "Name" = "${local.name}SG-${random_id.this.hex}" }), var.default_tags)
 }

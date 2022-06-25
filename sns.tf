@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "alert" {
-  name              = "${local.name}SNS-AlertTopic"
+  name              = "${local.name}SNS-AlertTopic-${random_id.this.hex}"
   kms_master_key_id = var.kms_key_alias != "" ? data.aws_kms_alias.this[0].name : null
 }
 
