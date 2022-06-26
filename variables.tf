@@ -111,6 +111,6 @@ variable "create_lambda_layer" {
 
 variable "lambda_layer_arn" {
   type        = string
-  description = "ARN of a lambda layer"
+  description = "ARN of a lambda layer (MUST have the python package requests installed)"
   default     = ""
 }

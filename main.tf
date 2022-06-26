@@ -12,5 +12,6 @@ data "aws_kms_alias" "this" {
 
 module "lambda-layer" {
   count      = var.create_lambda_layer ? 1 : 0
+  source     = "./lambda-layer"
   layer_name = "${local.name}LambdaLayer-${random_id.this.hex}"
 }

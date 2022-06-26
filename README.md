@@ -36,7 +36,7 @@ Look into `./examples`
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_lambda-layer"></a> [lambda-layer](#module\_lambda-layer) |  | n/a |
+| <a name="module_lambda-layer"></a> [lambda-layer](#module\_lambda-layer) | ./lambda-layer | n/a |
 
 ## Resources
 
@@ -75,7 +75,7 @@ Look into `./examples`
 | <a name="input_html_path_502"></a> [html\_path\_502](#input\_html\_path\_502) | Path to a html file for a 502 fixed response | `string` | n/a | yes |
 | <a name="input_html_path_503"></a> [html\_path\_503](#input\_html\_path\_503) | Path to a html file for a 503 fixed response | `string` | n/a | yes |
 | <a name="input_kms_key_alias"></a> [kms\_key\_alias](#input\_kms\_key\_alias) | KMS key alias (e.g. alias/mykms) for SNS encryption at rest. Permissions for cloudwatch must be added to this as well https://aws.amazon.com/de/premiumsupport/knowledge-center/cloudwatch-receive-sns-for-alarm-trigger/. | `string` | `""` | no |
-| <a name="input_lambda_layer_arn"></a> [lambda\_layer\_arn](#input\_lambda\_layer\_arn) | ARN of a lambda layer | `string` | `""` | no |
+| <a name="input_lambda_layer_arn"></a> [lambda\_layer\_arn](#input\_lambda\_layer\_arn) | ARN of a lambda layer (MUST have the python package requests installed) | `string` | `""` | no |
 | <a name="input_listener_arn"></a> [listener\_arn](#input\_listener\_arn) | ARN of the ALB listener | `string` | n/a | yes |
 | <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | Prefix for all created resources (e.g. ApplicationX-) | `string` | n/a | yes |
 | <a name="input_sns_email_addresses"></a> [sns\_email\_addresses](#input\_sns\_email\_addresses) | List of email addresses to send reports to | `list(string)` | `[]` | no |
