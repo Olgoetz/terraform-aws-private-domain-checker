@@ -34,7 +34,9 @@ Look into `./examples`
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_lambda-layer"></a> [lambda-layer](#module\_lambda-layer) |  | n/a |
 
 ## Resources
 
@@ -64,6 +66,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Provisioning region | `string` | `"eu-central-1"` | no |
+| <a name="input_create_lambda_layer"></a> [create\_lambda\_layer](#input\_create\_lambda\_layer) | Create lambda layer specific for this tool | `bool` | `true` | no |
 | <a name="input_cw_cron_interval"></a> [cw\_cron\_interval](#input\_cw\_cron\_interval) | Cron interval in minutes to schedule the health check | `number` | `1` | no |
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | Tags to apply to all resources | `map(any)` | `{}` | no |
 | <a name="input_health_check_domain_name"></a> [health\_check\_domain\_name](#input\_health\_check\_domain\_name) | Domain name for the health check | `string` | n/a | yes |
@@ -72,6 +75,7 @@ No modules.
 | <a name="input_html_path_502"></a> [html\_path\_502](#input\_html\_path\_502) | Path to a html file for a 502 fixed response | `string` | n/a | yes |
 | <a name="input_html_path_503"></a> [html\_path\_503](#input\_html\_path\_503) | Path to a html file for a 503 fixed response | `string` | n/a | yes |
 | <a name="input_kms_key_alias"></a> [kms\_key\_alias](#input\_kms\_key\_alias) | KMS key alias (e.g. alias/mykms) for SNS encryption at rest. Permissions for cloudwatch must be added to this as well https://aws.amazon.com/de/premiumsupport/knowledge-center/cloudwatch-receive-sns-for-alarm-trigger/. | `string` | `""` | no |
+| <a name="input_lambda_layer_arn"></a> [lambda\_layer\_arn](#input\_lambda\_layer\_arn) | ARN of a lambda layer | `string` | `""` | no |
 | <a name="input_listener_arn"></a> [listener\_arn](#input\_listener\_arn) | ARN of the ALB listener | `string` | n/a | yes |
 | <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | Prefix for all created resources (e.g. ApplicationX-) | `string` | n/a | yes |
 | <a name="input_sns_email_addresses"></a> [sns\_email\_addresses](#input\_sns\_email\_addresses) | List of email addresses to send reports to | `list(string)` | `[]` | no |

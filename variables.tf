@@ -61,7 +61,7 @@ variable "sns_email_addresses" {
   default     = []
 }
 
-# Lambda env variables
+# Lambda
 # ------------------------------------------------------------------------------------
 
 variable "verify_ssl" {
@@ -101,4 +101,16 @@ variable "html_path_502" {
 variable "html_path_503" {
   type        = string
   description = "Path to a html file for a 503 fixed response"
+}
+
+variable "create_lambda_layer" {
+  type        = bool
+  default     = true
+  description = "Create lambda layer specific for this tool"
+}
+
+variable "lambda_layer_arn" {
+  type        = string
+  description = "ARN of a lambda layer"
+  default     = ""
 }

@@ -30,6 +30,7 @@ module "create_domain_health_check" {
   listener_arn             = "myArn"
   html_path_502            = "."
   html_path_503            = "."
+  lambda_layer_arn         = "layerArn"
 
 }
 
