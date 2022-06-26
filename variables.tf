@@ -93,14 +93,14 @@ variable "listener_arn" {
   description = "ARN of the ALB listener"
 }
 
-variable "html_path_502" {
+variable "html_content_502" {
   type        = string
-  description = "Path to a html file for a 502 fixed response"
+  description = "Content for a html file for a 502 fixed response"
 }
 
-variable "html_path_503" {
+variable "html_content_503" {
   type        = string
-  description = "Path to a html file for a 503 fixed response"
+  description = "Content to a html file for a 503 fixed response"
 }
 
 variable "create_lambda_layer" {

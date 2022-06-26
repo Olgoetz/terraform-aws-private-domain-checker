@@ -33,8 +33,8 @@ resource "aws_lambda_function" "this" {
       health_check_path        = var.health_check_path
       port                     = var.health_check_port
       listener_arn             = var.listener_arn
-      html_path_502            = var.html_path_502
-      html_path_503            = var.html_path_503
+      html_content_502         = var.html_content_502
+      html_content_503         = var.html_content_503
     }
   }
 }

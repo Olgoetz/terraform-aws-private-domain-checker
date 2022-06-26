@@ -19,14 +19,9 @@ port = os.environ['port']
 path = os.environ['health_check_path']
 verify_ssl = os.environ["verify_ssl"]
 listener_arn = os.environ["listener_arn"]
-html_path_502 = os.environ["html_path_502"]
-html_path_503 = os.environ["html_path_503"]
+message_body_502 = os.environ["html_content_502"]
+message_body_502 = os.environ["html_content_503"]
 
-# Get html message bodies for loadbalancer fixed responses
-with open(html_path_502) as f:
-    message_body_502 = f.read()
-with open(html_path_503) as f:
-    message_body_503 = f.read()
 
 
 # Activate or deactivate SSL
