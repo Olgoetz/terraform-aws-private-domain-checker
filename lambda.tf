@@ -19,7 +19,7 @@ resource "aws_lambda_function" "this" {
   role             = aws_iam_role.role_lambda.arn
   runtime          = "python3.9"
   timeout          = "120"
-  layers           = var.create_lambda_layer && var.lambda_layer_arn == "" ? [module.lambda_layer_arn] : [var.lambda_layer_arn]
+  layers           = var.create_lambda_layer && var.lambda_layer_arn == "" ? [module.lambda-layer.lambda_layer_arn] : [var.lambda_layer_arn]
 
   vpc_config {
     security_group_ids = [aws_security_group.this.id]
