@@ -20,7 +20,7 @@ path = os.environ['health_check_path']
 verify_ssl = os.environ["verify_ssl"]
 listener_arn = os.environ["listener_arn"]
 message_body_502 = os.environ["html_content_502"]
-message_body_502 = os.environ["html_content_503"]
+message_body_503 = os.environ["html_content_503"]
 
 
 
@@ -70,25 +70,35 @@ def create_rule_based_on_priority(listener_arn, message_body, status_code, prior
     except botocore.exceptions.ClientError as error:
         logger.error(error)
 
-def delete_rule_based_on_priority(listener_arn, priority):
+def desribe_rule_based_on_priority(listener_arn,priority):
+    """ Desribe rule based on priority.
+
+    :param lister_arn: ARN of the ALB listener
+    :param priority: Priority of the rule
+    """
+        try:
+            rules = alb_client.describe_rules(ListenerArn=listener_arn)["Rules"]
+            priority_rule = list(filter(lambda rule: rule["Priority"] == str(priority) ,rules))[0]
+            priority_rule_arn = priority_rule["RuleArn"]
+            priority_rule_action_status_code = priority_rule["Actions"][0]["FixedResponseConfig"]["StatusCode"]
+            return priority_rule_arn, priority_rule_action_status_code
+        except IndexError as e:
+            print(f"No rule with prio {priority} exists")
+            return 0, 0
+            
+    
+
+def delete_rule_based_on_priority(priority_rule_arn):
     """ Delete a listener rule.
     
-    :param listener_arn: ARN of the listener
-    :param priority: Priority of the rule to delete
+    :param priority_rule_arn: ARN of the rule
     :return: none
     """
     try:
-        rules = alb_client.describe_rules(ListenerArn=listener_arn)["Rules"]
-      #  print(rules)
-        priority_rule_arn = list(filter(lambda rule: rule["Priority"] == str(priority) ,rules))[0]["RuleArn"]
-        print(f"Priority {priority} rule ARN: {priority_rule_arn}")
         alb_client.delete_rule(RuleArn=priority_rule_arn)
         print(f"{priority_rule_arn} deleted!")
     except botocore.exceptions.ClientError as error:
         logger.error(error)
-    except IndexError as e:
-        print(f"No rule with prio {priority} exists")
-
 
 
 # Entry point
@@ -119,7 +129,13 @@ def handler(event, context):
                     'Value': metric
                 },
                 ])
-            delete_rule_based_on_priority(listener_arn,str(1))
+
+            rule_arn, rule_status_code = desribe_rule_based_on_priority(listener_arn, 2)
+
+            # If the rule exists, then delete it as the application is healthy
+            if rule_arn != 0:
+                delete_rule_based_on_priority(rule_arn))
+        
 
         else:
             metric = 0
@@ -133,11 +149,27 @@ def handler(event, context):
                     'Value': metric
                 },
                 ])
-            if r.status_code == 502:
-                create_rule_based_on_priority(listener_arn,message_body_502, "502", 1,domainname)
+             # Check for server error code
+             if r.status_code == 502 or r.status_code == 503:
 
-            if r.status_code == 503:
-                create_rule_based_on_priority(listener_arn,message_body_503, "503", 1,domainname)
+                # Get the priority 1 rule arn
+                rule_arn, rule_status_code = desribe_rule_based_on_priority(listener_arn, 2)
+
+                message_body_map= {
+                    "502": message_body_502,
+                    "503": message_body_503
+                }
+
+                # If the rule exists, then check if an appropriate fixed response has already been set. 
+                # Otherwise delete the old one and create a new fixed response rule
+                if rule_arn != 0:
+                    if int(r.status_code) == int(rule_status_code):
+                        print("Nothing to do. Same StatusCode")
+                    else:
+                        delete_rule_based_on_priority(rule_arn))
+                        create_rule_based_on_priority(listener_arn,message_body_map[str(r.status_code)], str(r.status_code), 2,domainname)
+                else:
+                    create_rule_based_on_priority(listener_arn,message_body_map[str(r.status_code)], str(r.status_code), 2,domainname)
                
 
     except requests.exceptions.ConnectionError as e:

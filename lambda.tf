@@ -72,7 +72,9 @@ data "aws_iam_policy_document" "policy_role_lambda" {
     sid = 2
     actions = [
       "elasticloadbalancing:CreateRule",
-    "elasticloadbalancing:DeleteRule"]
+      "elasticloadbalancing:DeleteRule",
+      "elasticloadbalancing:DescribeRules",
+    ]
     resources = [var.listener_arn]
   }
   statement {
