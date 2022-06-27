@@ -28,8 +28,8 @@ module "create_domain_health_check" {
   vpc_id                   = "vpc-12345"
   sns_email_addresses      = ["mymail@axa.com"]
   listener_arn             = "myArn"
-  html_path_502            = "."
-  html_path_503            = "."
+  html_content_502         = "."
+  html_content_503         = "."
   lambda_layer_arn         = "layerArn"
 
 }

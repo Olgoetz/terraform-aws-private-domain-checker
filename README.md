@@ -3,6 +3,12 @@
 A Terraform module to provision a domain health checker for private applications
 hosted in a private subnet.
 
+
+*If you only want you have a domain check without any fixed responses through an ALB, please chose version 1.0.0*
+## Prerequisites
+
+- [x] AWS ALB with a listener rule as prio 1 pointing to the health check (for version >=2.0.0)
+
 ## Features
 
 - [x] Cron Job customizable

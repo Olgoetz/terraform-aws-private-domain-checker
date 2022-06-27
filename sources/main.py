@@ -76,15 +76,15 @@ def desribe_rule_based_on_priority(listener_arn,priority):
     :param lister_arn: ARN of the ALB listener
     :param priority: Priority of the rule
     """
-        try:
-            rules = alb_client.describe_rules(ListenerArn=listener_arn)["Rules"]
-            priority_rule = list(filter(lambda rule: rule["Priority"] == str(priority) ,rules))[0]
-            priority_rule_arn = priority_rule["RuleArn"]
-            priority_rule_action_status_code = priority_rule["Actions"][0]["FixedResponseConfig"]["StatusCode"]
-            return priority_rule_arn, priority_rule_action_status_code
-        except IndexError as e:
-            print(f"No rule with prio {priority} exists")
-            return 0, 0
+    try:
+        rules = alb_client.describe_rules(ListenerArn=listener_arn)["Rules"]
+        priority_rule = list(filter(lambda rule: rule["Priority"] == str(priority) ,rules))[0]
+        priority_rule_arn = priority_rule["RuleArn"]
+        priority_rule_action_status_code = priority_rule["Actions"][0]["FixedResponseConfig"]["StatusCode"]
+        return priority_rule_arn, priority_rule_action_status_code
+    except IndexError as e:
+        print(f"No rule with prio {priority} exists")
+        return 0, 0
             
     
 
@@ -134,7 +134,7 @@ def handler(event, context):
 
             # If the rule exists, then delete it as the application is healthy
             if rule_arn != 0:
-                delete_rule_based_on_priority(rule_arn))
+                delete_rule_based_on_priority(rule_arn)
         
 
         else:
@@ -149,8 +149,8 @@ def handler(event, context):
                     'Value': metric
                 },
                 ])
-             # Check for server error code
-             if r.status_code == 502 or r.status_code == 503:
+            # Check for server error code
+            if r.status_code == 502 or r.status_code == 503:
 
                 # Get the priority 1 rule arn
                 rule_arn, rule_status_code = desribe_rule_based_on_priority(listener_arn, 2)
@@ -166,7 +166,7 @@ def handler(event, context):
                     if int(r.status_code) == int(rule_status_code):
                         print("Nothing to do. Same StatusCode")
                     else:
-                        delete_rule_based_on_priority(rule_arn))
+                        delete_rule_based_on_priority(rule_arn)
                         create_rule_based_on_priority(listener_arn,message_body_map[str(r.status_code)], str(r.status_code), 2,domainname)
                 else:
                     create_rule_based_on_priority(listener_arn,message_body_map[str(r.status_code)], str(r.status_code), 2,domainname)
