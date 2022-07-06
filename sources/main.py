@@ -85,6 +85,11 @@ def desribe_rule_based_on_priority(listener_arn,priority):
     except IndexError as e:
         print(f"No rule with prio {priority} exists")
         return 0, 0
+    
+    except KeyError as e:
+        print(f"No rule with 'FixedResponseConfig' exists")
+        return 0, 0
+            
             
     
 
