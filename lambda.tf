@@ -75,7 +75,7 @@ data "aws_iam_policy_document" "policy_role_lambda" {
       "elasticloadbalancing:DeleteRule",
       "elasticloadbalancing:DescribeRules",
     ]
-    resources = [var.listener_arn]
+    resources = ["*"]
   }
   statement {
     sid       = 3
@@ -86,7 +86,7 @@ data "aws_iam_policy_document" "policy_role_lambda" {
 
 # Policy resource
 resource "aws_iam_role_policy" "policy_role_lambda" {
-  name   = "${local.name}-LambdaPolicy-${random_id.this.hex}"
+  name   = "${local.name}LambdaPolicy-${random_id.this.hex}"
   policy = data.aws_iam_policy_document.policy_role_lambda.json
   role   = aws_iam_role.role_lambda.id
 }
